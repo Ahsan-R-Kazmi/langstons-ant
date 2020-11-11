@@ -1,20 +1,33 @@
 package com.langtonsant;
 
+/**
+ * Simulates Langton's Ant with the provided parameters in the main function.
+ */
 public class Solution {
 
+    /** The char '.' represents a white cell in the grid. */
     public static final char WHITE = '.';
+    /** The char '#' represents a black cell in the grid. */
     public static final char BLACK = '#';
 
+    /** There a total of 4 moves the ant can make (UP, RIGHT, DOWN, LEFT). */
     public static final int MOVES = 4;
+    /** The UP move is represented as the integer 0. */
     public static final int UP = 0;
+    /** The RIGHT move is represented as the integer 0. */
     public static final int RIGHT = 1;
+    /** The DOWN move is represented as the integer 2. */
     public static final int DOWN = 2;
+    /** The LEFT move is represented as the integer 3. */
     public static final int LEFT = 3;
 
+    /**
+     * Represents the ant on the grid.
+     */
     private static class Ant {
 
         /**
-         * Constructs an Ant with the specified coordinates and direction.
+         * Constructs an ant with the specified coordinates and direction.
          * @param row The row coordinate for the ant (zero-indexed).
          * @param col The column coordinate for the ant (zero-indexed).
          * @param direction The integer representation of the direction the ant is facing.
@@ -25,8 +38,11 @@ public class Solution {
             this.direction = direction;
         }
 
+        /** The row the ant is currently on in the grid. */
         private int row;
+        /** The column the ant is currently on in the grid. */
         private int col;
+        /** The direction of the ant for it's current position in the grid. */
         private int direction;
 
         /**
@@ -82,7 +98,7 @@ public class Solution {
     }
 
     /**
-     * This function will compute the simulate Langton's ant with the requested parameters and will return the final state
+     * This function will simulate Langton's ant with the requested parameters and will return the final state
      * of the grid after the ant has taken all its requested steps.
      *
      * @param rows The number of rows in the grid.
@@ -104,7 +120,7 @@ public class Solution {
         // of the ant.
         Ant ant = new Ant(antRow, antCol, direction);
 
-        // Update the grid based on the rules of Langton's Ant.
+        // Update the grid based on the rules of Langton's Ant for the requested number of steps.
         for (int i = 0; i < steps; i++) {
             updateLangtonsGridForAntMovement(grid, ant);
         }
@@ -165,7 +181,6 @@ public class Solution {
         return grid;
     }
 
-
     /**
      * Update the provided grid after the ant takes a step.
      *
@@ -180,16 +195,16 @@ public class Solution {
         int direction = ant.getDirection();
         switch (grid[i][j]) {
             case WHITE: {
-                // Turn the ant 90 degrees clockwise, and move it one step in that direction.
+                // Turn the ant 90 degrees clockwise.
                 direction = Math.floorMod(direction + 1, MOVES);
-                // Change the grid location that the ant left to black.
+                // Change the grid location that the ant will leave to black.
                 grid[i][j] = BLACK;
                 break;
             }
             case BLACK: {
-                // Turn the ant 90 degrees counter-clockwise, and move it one step in that direction.
+                // Turn the ant 90 degrees counter-clockwise.
                 direction = Math.floorMod(direction - 1, MOVES);
-                // Change the grid location that the ant left to white.
+                // Change the grid location that the ant will leave to white.
                 grid[i][j] = WHITE;
                 break;
             }
@@ -199,6 +214,7 @@ public class Solution {
             }
         }
 
+        // Save the new ant direction and move it one step in that new direction.
         ant.setDirection(direction);
         moveAntOneStepInDirection(ant, direction, rows, cols);
     }
@@ -244,6 +260,10 @@ public class Solution {
         }
     }
 
+    /**
+     * Prints the provided grid to the system.
+     * @param grid The grid to be printed.
+     */
     private static void printGrid(char[][] grid) {
         int rows = grid.length;
         int cols = grid[0].length;
@@ -294,8 +314,9 @@ public class Solution {
                 break;
             }
             default: {
-                throw new IllegalArgumentException(String.format("The direction must be one of: %d, %d, %d, %d. It " +
-                        "was instead %d.", UP, RIGHT, DOWN, LEFT, ant.getDirection()));
+                throw new IllegalArgumentException(String.format("The current ant direction must be one of: %d, %d, " +
+                        "%d, %d. It was instead %d. The grid will not be printed.",
+                        UP, RIGHT, DOWN, LEFT, ant.getDirection()));
             }
         }
 
