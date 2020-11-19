@@ -1,1 +1,1 @@
-# A project simulating Langton's Ant."
+# A project simulating Langton's Ant.
